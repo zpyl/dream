@@ -12,6 +12,7 @@
 
     <context:component-scan base-package="com.dream.protal.controller"/>
     <!--开启MVC注解扫描 如果配置了此注解驱动，那么就不用配置处理器映射器和处理器适配器了 -->
+    <context:property-placeholder location="classpath:resource/AD1.properties"/>
     <mvc:annotation-driven/>
     <!--静态资源映射-->
     <mvc:default-servlet-handler/>
@@ -23,6 +24,11 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <!--加上一个ItemService的bean，从manager系统中调用-->
+    <dubbo:application name="dream_manager_web"/>
+    <!--注册中心的地址-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" register=""/>
+    <dubbo:reference interface="com.dream.content.service.TbContentService" id="tbContentService"/>
 
   <!--  &lt;!&ndash;上传图片的配置&ndash;&gt;
     &lt;!&ndash;导入外部文件&ndash;&gt;
@@ -48,5 +54,5 @@
         spring容器中，给bean设置的id="itemService"在controller中注入对象时，使用id进行注入
     &ndash;&gt;
     <dubbo:reference interface="com.dream.service.ItemService" id="itemService"/>
-    <dubbo:reference interface="com.dream.service.ItemCatService" id="itemCatService"/>-->
+    -->
 </beans>

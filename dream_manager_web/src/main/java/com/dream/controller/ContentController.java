@@ -43,4 +43,20 @@ public class ContentController {
     public DreamResult save(TbContent tbContent){
         return tbContentService.save(tbContent);
     }
+
+    /**
+     * 修改
+     * @param tbContent 修改的信息
+     * @return
+     */
+    @RequestMapping("/edit")
+    public DreamResult edit(TbContent tbContent){
+        return tbContentService.edit(tbContent);
+    }
+
+    @RequestMapping("/delete")
+    public DreamResult delete(Long[] ids){
+        return tbContentService.delete(ids);
+    }
+
 }

@@ -19,5 +19,6 @@
   相当于一个bean，给这个bean注入值，通过ref注入对象
   -->
   <dubbo:service interface="com.dream.content.service.TbContentCategoryService" ref="tbContentCategoryServiceImpl"/>
+  <dubbo:service interface="com.dream.content.service.TbContentService" ref="tbContentServiceImpl"/>
 
 </beans>

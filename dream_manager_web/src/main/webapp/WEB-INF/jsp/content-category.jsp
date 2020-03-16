@@ -62,17 +62,26 @@ function menuHandler(item){
 	}else if(item.name === "rename"){
 		tree.tree('beginEdit',node.target);
 	}else if(item.name === "delete"){
-        if(node.state=="open"){
-            $.messager.confirm('确认','确定删除名为 '+node.text+' 的分类吗？',function(r){
-                if(r){
-                    $.post("/content/category/delete",{parentId:node.parentId,id:node.id},function(){
-                        tree.tree("remove",node.target);
-                    });
-                }
-            });
-        }else{
-            $.messager.confirm('确认','不可以直接删除父类，请先删除子类');
-        }
+        $.messager.confirm('确认','确定删除名为 '+node.text+' 的分类吗？',function(r){
+            console.log(node.children);
+            //1、判断当前要删除的节点是否是父节点
+            //当该节点下有子节点并且子节点数组长度大于0时，不能删除   (undefined获取length为0 ,则可以删除)
+            if(node.children && node.children.length>0){
+                $.messager.alert('提示','此分类下是父分类,想要删除请先删除其下所有子分类');
+                return;
+            }
+            //2、判断一下当前节点的父节点是否只有这一个子节点，如果是，则isParentAfterDelete就是false
+            var isParentAfterDelete=
+                $("#contentCategory").tree("getParent",node.target).children.length==1?false:true;
+            console.log(isParentAfterDelete);
+            if(r){
+                $.post("/content/category/delete/",{parentId:$("#contentCategory").tree("getParent",node.target).id,
+                    id:node.id,isParentAfterDelete:isParentAfterDelete},function(){
+                    //通过tree提供的方法进行了前端的删除，但是实际上树 的结构并没有变--不行的，更新一下树 的结构
+                    tree.tree("remove",node.target);
+                });
+            }
+        });
 
 	}
 }

@@ -110,4 +110,16 @@ public class TbContentCategoryServiceImpl implements TbContentCategoryService {
         }
         return DreamResult.ok();
     }
+
+    @Override
+    public DreamResult delete(Long parentId, Long id, Boolean isParentAfterDelete) {
+        if(!isParentAfterDelete){
+            TbContentCategory tbContentCategory = new TbContentCategory();
+            tbContentCategory.setId(parentId);
+            tbContentCategory.setIsParent(false);
+            tbContentCategoryMapper.updateByPrimaryKeySelective(tbContentCategory);
+        }
+        tbContentCategoryMapper.deleteByPrimaryKey(id);
+        return DreamResult.ok();
+    }
 }

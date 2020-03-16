@@ -36,4 +36,13 @@ public interface TbContentCategoryService {
      * @return
      */
     DreamResult delete(Long id);
+
+    /**
+     * 删除
+     * @param parentId 父类的id
+     * @param id 删除的id
+     * @param isParentAfterDelete 父类是否还有其他子类
+     * @return
+     */
+    DreamResult delete(Long parentId, Long id, Boolean isParentAfterDelete);
 }

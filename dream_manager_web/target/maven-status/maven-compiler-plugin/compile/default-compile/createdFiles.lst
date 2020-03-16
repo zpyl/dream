@@ -4,3 +4,4 @@ com\dream\controller\ImageController.class
 com\dream\controller\ContentCategoryController.class
 com\dream\web\util\FastDFSClient.class
 com\dream\controller\ItemCatController.class
+com\dream\controller\ContentController.class

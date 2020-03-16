@@ -51,8 +51,16 @@ public class ContentCategoryController {
     public DreamResult update(@RequestParam(value = "id") Long parentId,String name){
         return tbContentCategoryService.update(parentId,name);
     }
+
+    /**
+     * 删除
+     * @param parentId 父类的id
+     * @param id 删除的id
+     * @param isParentAfterDelete 父类下面是否还有子类
+     * @return
+     */
     @RequestMapping("/delete")
-    public DreamResult delete(Long id){
-        return tbContentCategoryService.delete(id);
+    public DreamResult delete(Long parentId,Long id,Boolean isParentAfterDelete){
+        return tbContentCategoryService.delete(parentId,id,isParentAfterDelete);
     }
 }

@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,29 @@ public class TbContentServiceImpl implements TbContentService {
         tbContent.setCreated(new Date());
         tbContent.setUpdated(tbContent.getCreated());
         tbContentMapper.insertSelective(tbContent);
+        return DreamResult.ok();
+    }
+
+    @Override
+    public List<TbContent> selectContentByCategoryId(Long categoryId) {
+        TbContentExample tbContentExample =new TbContentExample();
+        TbContentExample.Criteria criteria = tbContentExample.createCriteria();
+        criteria.andCategoryIdEqualTo(categoryId);
+        return tbContentMapper.selectByExample(tbContentExample);
+    }
+
+    @Override
+    public DreamResult edit(TbContent tbContent) {
+        tbContentMapper.updateByPrimaryKey(tbContent);
+        return DreamResult.ok();
+    }
+
+    @Override
+    public DreamResult delete(Long[] ids) {
+        TbContentExample tbContentExample = new TbContentExample();
+        TbContentExample.Criteria criteria = tbContentExample.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        tbContentMapper.deleteByExample(tbContentExample);
         return DreamResult.ok();
     }
 }
